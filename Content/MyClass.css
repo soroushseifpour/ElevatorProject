@@ -1,0 +1,28 @@
+﻿.myclass {
+    width: 50px;
+    display: inline-block;
+    margin: 0 2px;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    background: #ffffff;
+    color: #fd1616;
+    font-weight: 600;
+    font-size: 17px;
+    -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    border-radius: 10px;
+}
+@font-face {
+    font-family: "Vazir-FD";
+    src: url("Vazir-FD.eot");
+    src: url("Vazir-FD.woff") format("woff"), url("Vazir-FD.otf") format("opentype"), url("Vazir-FD.svg#filename") format("svg");
+}
+.main ul li a {
+    color: orange !important;
+    font-family: "Vazir-FD",sans-serif !important;
+}
+.active {
+    background: #001935;
+}

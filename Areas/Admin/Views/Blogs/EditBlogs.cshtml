@@ -1,0 +1,131 @@
+﻿@model ElevatorProject.Models.BlogTB
+@{
+    ViewBag.Title = "EditBlogs";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@{
+    TempData["BlogID"] = Model.BlogID;
+}
+<style>
+    .note-toolbar {
+        z-index: 1;
+    }
+</style>
+
+<div class="add-edit-product-wrap col-12">
+    <div class="add-edit-product-form">
+        @using (Ajax.BeginForm("EditBlogs", "Blogs", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-horizontal">
+                <h4>کاتالوگ</h4>
+                <hr />
+                <input type="hidden" value="@Model.BlogID" name="BlogID" />
+                <div class="form-group">
+                    <div class="col-lg-6 col-12 mb-30">
+                        عنوان کاتالوگ
+                        <input id="BlogTitle" class="form-control" type="text" name="BlogTitle" value="@Model.BlogTitle">
+                        <div style="display:none" id="required"><p style="color:red">فیلد مورد نظر را پر کنید</p></div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 mb-30">
+                        <div class="box">
+                            <div class="box-head">
+                                <h3 class="title">توضیحات کاتالوگ</h3>
+                            </div>
+                            <div class="box-body">
+                                <textarea class="summernote" id="BlogText" name="BlogText">@Model.BlogText</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-20">
+                    <div class="col-lg-6 col-12 mb-20">
+                        <h6 class="mb-15">فایل بارگذاری شده در صفحه اصلی</h6>
+                        @if (!Model.ImageName.IsEmpty())
+                        {
+
+                            <img src="@Url.Content("~/UploadedFiles/" + Model.ImageName)" style="width:200px;height:200px;" />
+                        }
+                        <input type="file" name="ImgUp" id="ImgUp" />
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="d-flex flex-wrap justify-content-start col mbn-10 mt-4">
+                        <button class="button button-outline button-success mb-10 ml-10 mr-0" id="btn-addpackage" type="submit">ذخیره و انتشار</button>
+                        <a href="" class="button button-outline button-danger  mb-10 ml-10 mr-0 btn-delete" onclick="deleteitem(this)">حذف کاتالوگ</a>
+                    </div>
+                </div><!-- Button Group End -->
+            </div>
+        }
+    </div>
+</div>
+@section PageScript
+{
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/jquery.nice-select.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/niceSelect.active.js"></script>
+
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/summernote/summernote.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/quill/quill.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/quill/quill.active.js"></script>
+    <script>
+        function deleteitem(e) {
+            if (confirm("ایا کاتالوگ پاک شود؟")) {
+                e.href = "/Admin/Blogs/DeleteBlog";
+            }
+
+        }
+    </script>
+    <script>
+
+        (function () {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            $('form').ajaxForm({
+                beforeSend: function () {
+
+                },
+                uploadProgress: function () {
+
+                },
+                success: function (e) {
+
+                    if (e.Status) {
+                        console.log("ss");
+                        toastr["success"]('تغییرات ذخیره شد');
+                        setTimeout(function () {
+                            location.reload()
+                        }, 1000)
+                    }
+                },
+                error: function () {
+                    toastr["error"]('خطا در ثبت اطلاعات');
+                }
+            })
+
+
+        })();
+    </script>
+}

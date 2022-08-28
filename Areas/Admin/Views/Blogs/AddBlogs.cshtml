@@ -1,0 +1,75 @@
+﻿@model ElevatorProject.Areas.Admin.ViewModel.Blogs
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    .note-toolbar {
+        z-index: 1;
+    }
+</style>
+<div class="add-edit-product-wrap col-12">
+
+    <div class="add-edit-product-form">
+        <div class="form-horizontal">
+            <h4>کاتالوگ</h4>
+            <hr />
+            @using (Html.BeginForm("AddBlogs", "Blogs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-lg-6 col-12 mb-30">
+                        @Html.LabelFor(model => model.BlogTitle, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.BlogTitle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.BlogTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 mb-30">
+                        <div class="box">
+                            <div class="box-head">
+                                <h3 class="title">توضیحات کاتالوگ</h3>
+                            </div>
+                            <div class="box-body">
+                                @Html.LabelFor(model => model.BlogText, htmlAttributes: new { @class = "control-label " })
+                                @Html.TextAreaFor(model => model.BlogText, new { @class = "summernote" })
+
+                                @*<textarea class="summernote" id="BlogText" name="BlogText"></textarea>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-20">
+                    <div class="col-lg-6 col-12 mb-20">
+                        <h6 class="mb-15">فایل بارگذاری شده در صفحه اصلی</h6>
+
+                        @*<input type="file" name="ImgUp" id="ImgUp" />*@
+                        @Html.LabelFor(model => model.ImgUp, htmlAttributes: new { @class = "control-label " })
+                        @Html.TextBoxFor(model => model.ImgUp, "", new { @type = "file" })
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="d-flex flex-wrap justify-content-start col mbn-10 mt-4">
+                        <button class="button button-outline button-success mb-10 ml-10 mr-0" id="btn-addpackage" type="submit">ذخیره و انتشار</button>
+                    </div>
+                </div><!-- Button Group End -->
+            }
+            </div>
+    </div>
+</div>
+@section PageScript
+{
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/jquery.nice-select.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/niceSelect.active.js"></script>
+
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/summernote/summernote.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/quill/quill.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/quill/quill.active.js"></script>
+}

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ElevatorProject.Areas.Admin.ViewModel.Blogs>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="col-12 mb-30">
+    <div class="box">
+        <div class="box-head">
+            <h4 class="title">کاتالوگ ها</h4>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <a class="col-sm-2 col-12 mb-20 button button-success" href="@Url.Action("AddBlogs","Blogs")"><span>کاتالوگ جدید اضافه کنید</span></a>
+            </div>
+            <div class="table-responsive">
+
+                <table class="table table-vertical-middle table-selectable">
+
+                    <!-- Table Head Start -->
+                    <thead>
+                        <tr>
+
+                            <!--<th class="selector h5"><button class="button-check"></button></th>-->
+                            <th><span>عنوان کاتالوگ</span></th>
+                            <th><span>عملیات</span></th>
+
+                        </tr>
+                    </thead><!-- Table Head End -->
+                    <!-- Table Body Start -->
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td><a href="#">@item.BlogTitle</a></td>
+                                <td><a class="h3" href="@Url.Action("EditBlogs","Blogs", new { id = item.BlogID })"><i class="zmdi zmdi-more"></i></a></td>
+                            </tr>
+                        }
+                    </tbody><!-- Table Body End -->
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- Recent Transaction End -->

@@ -1,0 +1,121 @@
+﻿@model ElevatorProject.Models.UserTB
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <!-- Page Title -->
+    <section class="section page-title-section bg-center-center bg-cover" style="background-image: url(/Content/static/img/overlay-2.jpg);">
+        <div class="container">
+            <div class="page-title text-center">
+                <h1>ثبت نام</h1>
+            </div>
+            <ol class="breadcrumb justify-content-center">
+                <li><a href="index.html">صفحه اصلی</a></li>
+                <li class="active">ثبت نام</li>
+            </ol>
+        </div> <!-- container -->
+    </section>
+    <!-- / -->
+
+    <section class="section gray-bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-7">
+                    <div class="section-title text-center">
+                        <h2 class="theme-after">ثبت نام در سایت</h2>
+                    </div>
+                </div>
+            </div> <!-- row -->
+            @if (ViewBag.status != null && Convert.ToBoolean(ViewBag.status))
+            {
+                if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Success!</strong>@ViewBag.Message
+                    </div>
+                }
+            }
+            else
+            {
+            <div class="row justify-content-center javadright ">
+                <div class="col-md-8 col-lg-8">
+                    <div class="contact-form mx-auto" style="width:600px;">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-4 " })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("UserExist", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PassWord, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConfirmedPassWord, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ConfirmedPassWord, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ConfirmedPassWord, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1" style="margin-right:14px">
+                                <div class="send">
+                                    <input type="submit" class="btn btn-success" style="width:100px" value="ارسال"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            }
+        </div> <!-- container -->
+    </section>
+
+    <!-- / -->
+</main>
+<!-- Main End -->
+@section Scripts
+{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+}

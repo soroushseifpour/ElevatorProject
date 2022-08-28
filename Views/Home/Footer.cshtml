@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ElevatorProject.Models.SevicesTB>
+<footer class="footer" >
+    <section class="footer-section">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12 col-lg-5 sm-m-15px-tb md-m-30px-b">
+                    <h4 class="font-alt">درباره ما</h4>
+                    <p>طراحی مشاور،ساخت،فروش،نضب و راه انداز انواع اسانسور</p>
+                    <p>عضو رسمی سندیکای اسانسور و پله برقی ایران</p>
+                    <p>دارای پروانه طراحی و مونتاژ اسانسور از وزارت صنایع</p>
+
+                </div> <!-- col -->
+
+                <div class="col-6 col-md-5 col-lg-2 sm-m-15px-tb">
+                    <h4 class="font-alt">دسترسی سریع</h4>
+
+                    <ul class="fot-link">
+                        <li><a href="/">صفحه اصلی</a></li>
+                        <li><a href="/projects">پروژه های ما</a></li>
+                    </ul>
+                </div> <!-- col -->
+
+                <div class="col-6 col-md-5 col-lg-2 sm-m-15px-tb">
+                    <h4 class="font-alt">خدمات ما</h4>
+
+                    <ul class="fot-link">
+                        @foreach (var item in Model)
+                        {
+
+                            <li>@item.ServiceTitle</li>
+                        }
+                    </ul>
+                </div><!-- col -->
+                <div class="col-6 col-md-5 col-lg-2 sm-m-15px-tb">
+                    <h4 class="font-alt">تماس با ما</h4>
+
+                    <ul class="fot-link">
+                        <li>تهران،کوی نصر(گیشا)،نبش خیابان 39،ساختمان 270 گیشا</li>
+                        <li>novinrunsanaat@gmail.com</li>
+                        <li>
+                            تلفن های تماس:<br /> 88289424<br />88286429-30 <br> فکس: 88243407<br> کدپستی: 1447994851
+                        </li>
+                    </ul>
+                </div> <!-- col -->
+                <!-- col -->
+
+            </div>
+
+        </div> <!-- container -->
+        <div class="footer-copy">
+            <div class="row">
+                <div class="col-12">
+                    <p>تمام حقوق برای شرکت نوین ران صنعت محفوظ می باشد .</p>
+                </div><!-- col -->
+            </div> <!-- row -->
+        </div> <!-- footer-copy -->
+    </section>
+</footer>

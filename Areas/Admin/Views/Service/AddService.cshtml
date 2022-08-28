@@ -1,0 +1,141 @@
+﻿@model ElevatorProject.Areas.Admin.ViewModel.Services
+@{
+    ViewBag.Title = "AddService";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="row justify-content-between align-items-center mb-10">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+        <div class="page-heading">
+            <h3>انواع سرویس ها <span>/سرویس</span></h3>
+        </div>
+    </div><!-- Page Heading End -->
+</div><!-- Page Headings End -->
+<!-- Add or Edit Product Start -->
+<div class="add-edit-product-wrap col-12">
+
+    <div class="add-edit-product-form">
+
+        <h4 class="title">درباره سرویس</h4>
+
+        <div class="row" id="addForm">
+            @using (Html.BeginForm("AddService", "Service", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row pt-3">
+                    <div class="col-lg-6 col-6 mb-30">
+                        @Html.LabelFor(model => model.ServiceTitle, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.ServiceTitle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ServiceTitle, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-12 mb-30">
+                        @Html.LabelFor(model => model.ServicesText, htmlAttributes: new { @class = "control-label " })
+                        @Html.TextAreaFor(model => model.ServicesText, new { @class = "form-control", @cols = "20", @rows = "6" })
+                    </div>
+                    <div class="product-upload-gallery row flex-wrap">
+                        <div class="col-12 mb-30">
+                            <div class="box">
+                                <div class="box-head">
+                                    <p class="title">عکس سرویس</p>
+                                </div>
+                                <div class="box-body" data-provides="fileinput">
+                                    @Html.LabelFor(model => model.file, htmlAttributes: new { @class = "control-label " })
+                                    @Html.TextBoxFor(model => model.file, "", new { @type = "file" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-20">
+                        @Html.LabelFor(model => model.isActive, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.isActive, "", new { @type = "checkbox", @class = "form-control" })
+                    </div>
+                    <div class="col-12 col-lg-auto mt-30">
+                        <div class="buttons-group">
+                            <button class="button button-outline button-success btn-edit" type="submit">ساخت سرویس جدید</button>
+                        </div>
+                    </div><!-- Page Button Group End -->
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>
+@section PageScript
+{
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/moment/moment.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/footable/footable.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/footable/footable.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.active.js"></script>
+    @*<script>
+        var input = document.querySelector('#ServiceTitle')
+        var active = document.querySelector('#isActive')
+        console.log(input)
+        input.addEventListener('keyup', function (e) {
+            let sibling = input.nextElementSibling
+            sibling.style.display = "none"
+        })
+        $(function () {
+            $(document).ready(function () {
+                $(document).on("click", ".btn-edit", function (e) {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    if (input.value == "") {
+                        let sibling = input.nextElementSibling
+                        sibling.style.display = "block"
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Service/AddService",
+                        data: JSON.stringify({
+
+                            ServiceTitle: $("#ServiceTitle").val(),
+                            ServicesText: $("#ServicesText").val(),
+                            isActive: active.checked
+                        }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            if (e.Status) {
+                                toastr["success"]('تغییرات ذخیره شد')
+                                setTimeout(function () { location.reload(); }, 2000);
+
+                            }
+                            else {
+                                toastr["error"]("خطا در ارتباط با سرور!", "خطا")
+
+                            }
+                        },
+                        error: function () {
+                            toastr["warning"]('لطفا فیلدها را با دقت پرکنید');
+                        }
+                    });
+                });
+
+            });
+        });
+
+    </script>*@
+}

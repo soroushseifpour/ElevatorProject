@@ -1,0 +1,86 @@
+﻿@model ElevatorProject.Areas.Admin.ViewModel.Elevator
+@{
+    ViewBag.Title = "AddElevator";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="row justify-content-between align-items-center mb-10">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+        <div class="page-heading">
+            <h3>نوین ران صنعت <span>/ افزودن اسانسور</span></h3>
+        </div>
+    </div><!-- Page Heading End -->
+    <!-- Page Button Group Start -->
+</div><!-- Page Headings End -->
+<!-- Add or Edit Product Start -->
+<div class="add-edit-product-wrap col-12">
+
+    <div class="add-edit-product-form">
+        @using (Html.BeginForm("AddElevator", "Elevator", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            
+            @Html.AntiForgeryToken()
+            <h4 class="title pb-3">افزودن اسانسور </h4>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row pt-3">
+        <div class="col-lg-6 col-12 mb-30">
+            @Html.LabelFor(model => model.ElevatorTitle, htmlAttributes: new { @class = "control-label " })
+            @Html.EditorFor(model => model.ElevatorTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ElevatorTitle, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-lg-6 col-12 mb-30">
+            @Html.LabelFor(model => model.DateOfBuild, "تاریخ ساخت", htmlAttributes: new { @class = "control-label " })
+            @Html.EditorFor(model => model.DateOfBuild, new { htmlAttributes = new { @class = "form-control input-date-single" } })
+        </div>
+
+        <div class="col-12 mb-30">
+            @Html.LabelFor(model => model.ProjectDescription, "توضیحات تکمیلی", htmlAttributes: new { @class = "control-label " })
+            @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @cols = "20", @rows = "6" })
+        </div>
+    </div>
+            <div class="product-upload-gallery row flex-wrap">
+                <div class="col-12 mb-30">
+                    <div class="box">
+                        <div class="box-head">
+                            <p class="title">عکس هاس اسانسور</p>
+                        </div>
+                        <div class="box-body" data-provides="fileinput">
+                            @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label " })
+                            @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple"})
+                            @*<input type="file" class="file-pond" name="files" multiple />*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Button Group Start -->
+            <div class="row">
+                <div class="d-flex flex-wrap justify-content-start col mbn-10">
+                    <button class="button button-outline button-primary mb-10 ml-10 mr-0" type="submit">ذخیره و انتشار</button>
+                </div>
+            </div><!-- Button Group End -->
+
+        }
+    </div>
+
+</div><!-- Add or Edit Product End -->
+@section PageScript
+{
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Plugins & Activation JS For Only This Page -->
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/jquery.nice-select.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/niceSelect.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/filepond/filepond.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/filepond/filepond-plugin-image-exif-orientation.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/filepond/filepond-plugin-image-preview.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/filepond/filepond.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/dropify/dropify.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/dropify/dropify.active.js"></script>
+
+}

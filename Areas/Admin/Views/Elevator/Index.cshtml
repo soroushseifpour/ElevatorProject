@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ElevatorProject.Models.ElevatorTB>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="col-12 mb-30">
+    <div class="box">
+        <div class="box-head">
+            <h3 class="title">انواع پروژه ها</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <a class="col-sm-2 col-12 mb-20 button button-success" href="@Url.Action("AddElevator","Elevator")"><span>گروه جدید اضافه کنید</span></a>
+            </div>
+            <table class="table footable" data-paging="true" data-filtering="true" data-sorting="true" data-breakpoints='{ "xs": 480, "sm": 768, "md": 992, "lg": 1200, "xl": 1400 }'>
+                <thead>
+                    <tr>
+                        <th data-name="نام">اسانسور</th>
+                        <th data-name="تاریخ ساخت">تاریخ ساخت</th>
+                        <th data-name="عملیات">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>@item.ElevatorTitle</td>
+                            <td>@item.DateOfBuild.ToShamsi()</td>
+                            <td><a href="@Url.Action("EditElevator","Elevator",new { id= @item.ElevatorID })"><span class="badge badge-pill badge-warning">ادیت کنید</span></a> || <a onclick="Delete(this,@item.ElevatorID)"><span class="badge badge-pill badge-danger">پاک کردن</span></a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+            <div class="modal fade" id="MyModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body" id="myModalBody">
+                            ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageScript
+{
+    <script src="~/Areas/Admin/Content/assets/js/plugins/moment/moment.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/footable/footable.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/footable/footable.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.min.js"></script>
+    <script>
+        function Delete(e, id) {
+            if (confirm("پاک شود ؟")) {
+                $.get("/Admin/Elevator/DeleteElevator/" + id, function () {
+                    $(e).parent().parent().remove();
+                });
+            }
+        };
+    </script>
+}
+

@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+
+<html lang="fa">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> @ViewBag.Title</title>
+    <!-- / -->
+    <!---Font Icon-->
+    <link href="~/Content/static/plugin/font-awesome/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="~/Content/static/plugin/themify-icons/themify-icons.css" rel="stylesheet">
+    <!-- / -->
+    <!-- Plugin CSS -->
+    <link href="~/Content/static/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/static/plugin/owl-carousel/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/static/plugin/magnific/magnific-popup.css" rel="stylesheet">
+
+    <!-- / -->
+    <!-- Theme Style -->
+    <link href="~/Content/static/css/styles.css" rel="stylesheet">
+    <link href="~/Content/static/css/color/default.css" rel="stylesheet" id="color_theme">
+    <!-- / -->
+    <!-- Favicon -->
+    <link rel="icon" href="~/Content/static/img/Capture.JPG" />
+    <!-- / -->
+</head>
+<body data-spy="scroll" data-target="#navbar" data-offset="98">
+
+    <!-- Loading -->
+    <div class="sk-cube-grid" id="loading">
+        <div class="load-circle">
+            <div class="sk-cube sk-cube1"></div>
+            <div class="sk-cube sk-cube2"></div>
+            <div class="sk-cube sk-cube3"></div>
+            <div class="sk-cube sk-cube4"></div>
+            <div class="sk-cube sk-cube5"></div>
+            <div class="sk-cube sk-cube6"></div>
+            <div class="sk-cube sk-cube7"></div>
+            <div class="sk-cube sk-cube8"></div>
+            <div class="sk-cube sk-cube9"></div>
+        </div>
+    </div>
+    <!-- / -->
+    <header>
+            <nav class="navbar header-nav fixed-top navbar-expand-lg">
+                <div class="container">
+                    <a class="navbar-brand" href="/">
+                        <p style="font-size: medium;">نوین ران صنعت سهامی خاص<span>شرکت مهندسی </span></p>
+                    </a>
+                    <div class="navbar-collapse top-menu flex-column collapse" id="navbar">
+                        <ul class="navbar-nav ml-auto">
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a class="nav-link" href="index.html#home">سلام @User.Identity.Name</a>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <span class="sub-menu-toggle" data-toggle="dropdown" aria-haspopup="true"><i class="ti-angle-down"></i></span>
+                                        <ul class="sub-menu">
+                                            <li>
+                                                <a href="/Admin/Panel/Index">ورود به داشبورد</a>
+                                            </li>
+                                        </ul>
+
+                                    }
+                                </li>
+                            }
+                            <li><a class="nav-link " href="/Home/index/#home">خانه</a></li>
+                            <li><a class="nav-link" href="/Home/index#about">درباره ما</a></li>
+                            <li><a class="nav-link" href="/Home/index/#services">خدمات</a></li>
+                            <li><a class="nav-link" href="/Home/index/#portfolio">پروژه ها</a></li>
+                            <li><a class="nav-link" href="/contact-us">تماس با ما</a></li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+
+                                <li><a class="nav-link" href="/login"> ورود اعضا</a></li>
+                                @*<li><a class="nav-link" href="/register">ثبت نام</a></li>*@
+                            }
+                        </ul>
+
+                    </div>
+                    <ul class="navbar-nav extra-menu">
+                        <li class="search-box">
+                            <a class="nav-link search-toggle" href="javascript:void(0);"><i class="fa fa-search search_click"></i></a>
+                            <div class="searh-form">
+                                <form>
+                                    <input class="input-search" type="text" name="search" placeholder="جستجو...">
+                                    <button class="searc-btn"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                             
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                             
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    </header>
+    <!-- Header End -->
+    <!-- Main Start -->
+    @RenderBody()
+
+    <!-- Main End -->
+    <!-- Footer Start -->
+    @Html.Action("Footer", "Home")
+    <!-- / -->
+    <!-- jQuery -->
+    <script src="~/Content/static/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/static/js/jquery-migrate-3.0.0.min.js"></script>
+    <!-- Plugins -->
+    <script src="~/Content/static/plugin/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/static/plugin/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/static/plugin/particles/particles.min.js"></script>
+    <script src="~/Content/static/plugin/particles/particles-app.js"></script>
+
+    <script src="~/Content/static/js/custom.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿@model ElevatorProject.Models.UserTB
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>@Model.UserName سلام به شما </h2>
+<div class="row">
+    <!-- Top Report Start -->
+    <div class="col-xlg-3 col-md-6 col-12 mb-30">
+        <div class="top-report">
+
+            <!-- Head -->
+            <div class="head">
+                <h4>مجموع پروژه ها</h4>
+                <a href="#" class="view"><i class="zmdi zmdi-eye"></i></a>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <h5>@ViewBag.p_count</h5>
+            </div>
+            <div class="footer">
+                <div class="progess">
+                    <div class="progess-bar" style="width:@ViewBag.p_count%;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- Top Report End -->
+    <!-- Top Report Start -->
+    <div class="col-xlg-3 col-md-6 col-12 mb-30">
+        <div class="top-report">
+
+            <!-- Head -->
+            <div class="head">
+                <h4>مجموع سرویس ها</h4>
+                <a href="#" class="view"><i class="zmdi zmdi-eye"></i></a>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <h5>@ViewBag.s_cout</h5>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="progess">
+                    <div class="progess-bar" style="width:@ViewBag.s_cout%;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- Top Report End -->
+</div>
+

@@ -1,0 +1,95 @@
+﻿@model PagedList.PagedList<Projects>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "پروژه ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/rtl.css" />
+<link rel="stylesheet" href="~/Content/MyClass.css" />
+
+<main>
+
+    <!-- Page Title -->
+    <section class="section page-title-section bg-center-center bg-cover" style="background-image: url(/Content/static/img/overlay-2.jpg);">
+        <div class="container">
+            <div class="page-title text-center">
+                <h1>پروژه‌های ما</h1>
+            </div>
+            <ol class="breadcrumb justify-content-center">
+                <li><a href="index.html">صفحه اصلی</a></li>
+                <li class="active">پروژه‌های ما</li>
+            </ol>
+        </div>
+    </section>
+    <!-- / -->
+    <!-- Our Team -->
+    <section id="team" class="section gray-bg">
+        <div class="container">
+            <div class="row justify-content-center m-25px-b md-m-20px-b">
+                <div class="col-md-10 col-lg-5">
+                    <div class="section-title">
+                        <h2 class="theme-after">با پروژه‌های ما آشنا شوید</h2>
+                    </div>
+                </div>
+            </div> <!-- row -->
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="portfolio-item photoshop website col-lg-3 col-sm-6 mb-2">
+                        <div class="portfolio-col portfolio-hover-04">
+                            <img src="@Html.DisplayFor(modelItem=>item.ImageName)" title="@item.title" alt="@item.title">
+                            <a class="overlay theme-bg " data-toggle="modal" data-target="#exampleModalCenter" onclick="Create(@item.id)"></a>
+                            <div class="hover text-center p-10px">
+                                <p class="m-0px">@Html.DisplayFor(modelItem => item.title)</p>
+                            </div> <!-- hover -->
+                        </div> <!-- .portfolio-co -->
+                    </div> <!-- col -->
+                }
+            </div> <!-- row -->
+        </div> <!-- container -->
+        <br>
+        <nav aria-label="Page navigation example" class="main" style="display: flex;flex-direction: column;align-items: center;">
+            <ul class="justify-content-center">
+                @Html.PagedListPager(Model, page => Url.Action("Projects",
+                new { page }), new PagedListRenderOptions
+                {
+                    LiElementClasses = new string[] { "page-item", "myclass", "page-link" },
+                    DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+                    MaximumPageNumbersToDisplay=6
+                })
+            </ul>
+        </nav>
+    </section>
+    <!-- / -->
+</main>
+<!-- Main End -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title ml-auto" id="exampleModalLongTitle">Modal title</h5>
+            </div>
+            <div class="modal-body" id="myModalBody">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        function Create(id) {
+
+            $.get("/projectdetail/"+id,function (res) {
+                $("#exampleModalCenter").modal();
+                $("#exampleModalLongTitle").html("جزئیات پروژه");
+                $("#myModalBody").html(res);
+            });
+
+        };
+    </script>
+}

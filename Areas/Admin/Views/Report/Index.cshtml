@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ElevatorProject.Models.ContactUsTB>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="row justify-content-between align-items-center mb-10">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+        <div class="page-heading">
+            <h3>نظرات</h3>
+        </div>
+    </div><!-- Page Heading End -->
+
+</div><!-- Page Headings End -->
+<!--Mail Wrapper Start-->
+<div class="mail-wrapper">
+    <div class="col-lg-12 col-12 mb-30">
+        <div class="box">
+            <div class="box-head">
+                <h4 class="title">پاسخ گویی به نظرات و سوالات</h4>
+            </div>
+            <div class="box-body">
+                <ul class="nav nav-pills mb-15">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#home6"><i class="zmdi zmdi-border-color"></i>تماس با ما</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="profile6">
+                        <div class="mail-list">
+                            @foreach (var item in Model)
+                            {
+                                <div class="mail">
+
+
+                                    <div class="middle">
+
+                                        <div class="top">
+                                            <h4 class="name"><a href="single-mail.html">@item.FullName</a></h4>
+                                            <span class="date">@item.DateOfSend.ToShamsi()</span>
+                                        </div>
+
+                                        <div class="body">
+                                            <h5>@item.Email</h5>
+                                            <p>@item.ContactUsMessage</p>
+                                            <button value="@item.Email" id="@item.ContactUsID" onclick="reply_click(this.id,this.value)" class="btn-default button-compose-mail button button-danger button-round" data-toggle="modal" data-target="#modal-compose-mail">پاسخ دادن</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="right">
+                                        <button onclick="Delete(this,@item.ContactUsID)" class="mail-button-delete"><i class="zmdi zmdi-delete"></i></button>
+                                    </div>
+
+                                </div>
+                            }
+
+                            <!--Mail End-->
+                            <!--Mail Start-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Pill With Icon End-->
+
+    </div>
+</div>
+<div class="compose-mail-modal modal fade" id="modal-compose-mail">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">پیام جدید</h5>
+                <button type="button" class="close" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+            </div>
+
+            <div class="form">
+                <form action="SendEmail" method="post">
+                    <div class="row">
+                        <input id="contactid" name="contactid" type="hidden">
+                        <div class="col-6 mb-15">
+                            <input class="form-control" type="email" name="receiver" id="myText">
+                        </div>
+                        <div class="col-6 mb-15">
+                            <input class="form-control" type="text" name="subject" id="subject" placeholder="موضوع">
+                        </div>
+                        <div class="col-6 mb-15">
+                            <textarea rows="10" name="message" cols="50"></textarea>
+                        </div>
+                        <div class="buttons-group col-12">
+                            <input class="btn btn-primary" type="submit" value="Send" />
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section PageScript
+{
+    <script>
+        function reply_click(clicked_id, val) {
+            document.getElementById("myText").value = val;
+            document.getElementById("contactid").value = clicked_id;
+        }
+
+        function Delete(e, id) {
+            if (confirm("پاک شود ؟")) {
+
+                $.get("/Admin/Report/DeleteComment/" + id, function () {
+                    $(e).parent().parent().remove();
+                });
+            }
+        };
+    </script>
+}

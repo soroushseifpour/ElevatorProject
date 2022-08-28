@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "verifyAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<main>
+    <!-- Page Title -->
+    <section class="section page-title-section bg-center-center bg-cover" style="background-image: url(/Content/static/img/overlay-2.jpg);">
+        <div class="container">
+            <div class="page-title text-center">
+                <h1>ثبت نام</h1>
+            </div>
+            <ol class="breadcrumb justify-content-center">
+                <li><a href="index.html">صفحه اصلی</a></li>
+                <li class="active">ثبت نام</li>
+            </ol>
+        </div> <!-- container -->
+    </section>
+    <!-- / -->
+    <h2 class="text-right">اعتبارسنجی اکانت</h2>
+
+    @if (ViewBag.status != null && Convert.ToBoolean(ViewBag.status))
+    {
+<div class="alert alert-success text-right">
+    <strong>!موفقیت امیز</strong>
+    <br />
+    حساب کاربری شما باموفقیت ساخته شد برای ورود به پنل خود اینجا را کلیک کنید @Html.ActionLink("ورود به حساب کاربری", "Login", "Account")
+
+</div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong>
+        </div>
+    }
+</main>

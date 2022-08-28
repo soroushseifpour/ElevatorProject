@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ElevatorProject.Models.SevicesTB>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="col-12 mb-30">
+    <div class="box">
+        <div class="box-head">
+            <h4 class="title">سرویس ها</h4>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <a class="col-sm-2 col-12 mb-20 button button-success" href="@Url.Action("AddService","Service")"><span>سرویس جدید اضافه کنید</span></a>
+            </div>
+            <div class="table-responsive">
+
+                <table class="table table-vertical-middle table-selectable">
+
+                    <!-- Table Head Start -->
+                    <thead>
+                        <tr>
+
+                            <!--<th class="selector h5"><button class="button-check"></button></th>-->
+                            <th><span>نوع سرویس</span></th>
+                            <th><span>فعال / غیرفعال</span></th>
+                            <th><span>عملیات</span></th>
+
+                        </tr>
+                    </thead><!-- Table Head End -->
+                    <!-- Table Body Start -->
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td><a href="#">@item.ServiceTitle</a></td>
+                                @if (item.isActive)
+                                {
+                                    <td>فعال</td>
+                                }
+                                else
+                                {
+                                    <td>فعال نیست</td>
+                                }
+                                <td><a class="h3" href="@Url.Action("EditService","Service", new { id = item.ServicesID })"><i class="zmdi zmdi-more"></i></a></td>
+                            </tr>
+                        }
+                    </tbody><!-- Table Body End -->
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- Recent Transaction End -->

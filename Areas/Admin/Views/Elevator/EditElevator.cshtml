@@ -1,0 +1,230 @@
+﻿@model ElevatorProject.Areas.Admin.ViewModel.EditElevator
+@{
+    ViewBag.Title = "EditElevator";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<div class="row justify-content-between align-items-center mb-10">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+        <div class="page-heading">
+            <h3>نوین ران صنعت <span>/ ویرایش اسانسور</span></h3>
+        </div>
+    </div><!-- Page Heading End -->
+    <!-- Page Button Group Start -->
+</div><!-- Page Headings End -->
+<!-- Add or Edit Product Start -->
+<div class="add-edit-product-wrap col-12">
+
+    <div class="add-edit-product-form">
+        <h4 class="title pb-3">ویرایش اسانسور </h4>
+        @*@using (Html.BeginForm("EditElevator", "Elevator", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+        @using (Ajax.BeginForm("EditElevator", "Elevator", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+        {
+
+    <div class="row pt-3">
+        <input type="hidden" value="@Model.elevator.ElevatorID" name="ElevatorID" />
+        <div class="col-lg-6 col-12 mb-30">
+            <label class="control-label">عنوان اسانسور</label>
+            <input type="text" value="@Model.elevator.ElevatorTitle" id="ElevatorTitle" name="ElevatorTitle" class="form-control" />
+            <div class="text-danger" id="required" style="display:none">پر کردن این فیلد الزامی است</div>
+        </div>
+        <div class="col-lg-6 col-12 mb-30">
+            <label class="control-label">تاریخ ساخت</label>
+            <input type="datetime" value="@Model.elevator.DateOfBuild.ToShamsi()" id="DateOfBuild" name="DateOfBuild" class="form-control" />
+        </div>
+        <div class="col-lg-12 col-12 mb-30">
+            <label class="control-label">توضیحات تکمیلی</label>
+            <textarea id="ProjectDescription" name="ProjectDescription" class="form-control">@Model.elevator.ProjectDescription</textarea>
+        </div>
+    </div>
+
+            <div class="product-upload-gallery row flex-wrap">
+                <div class="col-12 mb-30">
+                    <div class="box">
+                        <div class="box-head">
+                            <p class="title">عکس های اسانسور</p>
+                        </div>
+                        <div class="box-body" data-provides="fileinput">
+                            <div class="row mbn-20">
+                                @foreach (var item in Model.images)
+                                {
+                                    <div class="col-lg-4 col-12 mb-20">
+
+                                        <input type="hidden" value="@item.imageID" name="imageIDs" />
+                                        <img src="@Url.Content("~/UploadedFiles/" + item.imageName)" style="width:200px;height:200px;" />
+                                        <button class="button button-outline button-danger mt-10 ml-10 mr-0 btn-edit" data-id="@item.imageID">پاک کردن تصویر</button>
+                                    </div>
+
+                                }
+                            </div>
+                            <div class="row mt-20">
+                                <div class="col-lg-6 col-12 mb-20">
+                                    <h6 class="mb-15">فایل جدید بارگذاری شده</h6>
+
+                                    <input type="file" name="ImgUp" id="ImgUp" multiple />
+
+                                </div>
+                            </div>
+
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <div id="status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Button Group Start -->
+            <div class="row">
+                <div class="d-flex flex-wrap justify-content-start col mbn-10">
+                    <button class="button button-outline button-primary mb-10 ml-10 mr-0 " type="submit">ذخیره و انتشار</button>
+                </div>
+            </div><!-- Button Group End -->
+        }
+    </div>
+    <style>
+        .progress {
+            position: relative;
+            width: 400px;
+            border: 1px solid #ddd;
+            padding: 1px;
+        }
+
+        .progress-bar {
+            width: 0px;
+            height: 20px;
+            background-color: #57be65;
+        }
+    </style>
+</div><!-- Add or Edit Product End -->
+@section PageScript
+{
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Plugins & Activation JS For Only This Page -->
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/jquery.nice-select.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/niceSelect.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/dropify/dropify.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/dropify/dropify.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.min.js"></script>
+    <script>
+        var image = document.querySelector("#ImgUp");
+        var element = document.querySelector("#required");
+        var ElevatorTitle = document.querySelector("#ElevatorTitle");
+
+        (function () {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            var bar = $('.progress-bar');
+            var percent = $('.progress-bar');
+            var status = $('#status');
+            ElevatorTitle.addEventListener("keyup", function () {
+                element.style.display = "none";
+            })
+            $('form').ajaxForm({
+                beforeSend: function () {
+                    if (image.files.length > 0) {
+                        status.empty();
+                        var percentValue = '0%';
+                        bar.width(percentValue);
+                        percent.html(percentValue);
+                    }
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    if (image.files.length > 0) {
+                        var percentValue = percentComplete + '%';
+                        bar.width(percentValue);
+                        percent.html(percentValue);
+                    }
+                },
+                success: function (e) {
+                    if (image.files.length > 0) {
+                        var percentValue = '100%';
+                        bar.width(percentValue);
+                        percent.html(percentValue);
+                        $('#ful').val('');
+                    }
+                    if (e.Status) {
+                     toastr["success"]('تغییرات ذخیره شد');
+                        setTimeout(function () {
+                            location.reload()
+                        }, 1000)
+                    }
+                },
+                error: function () {
+                    toastr["error"]('فیلد را پر کنید');
+                    element.style.display = "block";
+                }
+            })
+
+
+        })();
+    </script>
+    <script>
+        $(function () {
+            $(document).ready(function () {
+                $(document).on("click", ".btn-edit", function (e) {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    e.preventDefault();
+                    this.parentNode.remove()
+                    var id = this.dataset.id
+                    console.log(id);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Elevator/DeletingImage",
+                        data: JSON.stringify({
+                            ElevatorID:@Model.elevator.ElevatorID,
+                            ImageID:id,
+                        }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            if (e.Status) {
+                                toastr["success"]('تغییرات ذخیره شد');
+                            }
+                        },
+                        error: function () {
+                            toastr["warning"]('خطا در ارتباط با سرور');
+                        }
+                    });
+                });
+
+            });
+        });
+    </script>
+}

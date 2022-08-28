@@ -1,0 +1,151 @@
+﻿@model ElevatorProject.Models.SevicesTB
+@{
+    ViewBag.Title = "EditService";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@{
+    TempData["ServiceID"] = Model.ServicesID;
+}
+<div class="row justify-content-between align-items-center mb-10">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+        <div class="page-heading">
+            <h3>انواع سرویس ها <span>/سرویس</span></h3>
+        </div>
+    </div><!-- Page Heading End -->
+    <!-- Page Button Group Start -->
+    <div class="col-12 col-lg-auto mb-20">
+        <div class="buttons-group">
+
+            <a href="" class="button button-outline button-danger btn-delete" onclick="deleteitem(this)">حذف سرویس</a>
+        </div>
+    </div><!-- Page Button Group End -->
+    <!-- Add or Edit Product Start -->
+</div>
+<div class="add-edit-product-wrap col-12">
+
+    <div class="add-edit-product-form">
+
+        <h4 class="title">درباره سرویس</h4>
+        @using (Ajax.BeginForm("EditService", "Service", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row" id="addForm">
+                <input type="hidden" name="ServicesID" value="@Model.ServicesID" />
+                <div class="col-lg-6 col-12 mb-30">
+                    <input id="ServiceTitle" class="form-control" type="text" value="@Model.ServiceTitle" name="ServiceTitle">
+                    <div style="display:none" id="required"><p style="color:red">فیلد مورد نظر را پر کنید</p></div>
+                    نوع سرویس
+                </div>
+                <div class="col-12 mb-30">
+                    <textarea id="ServicesText" class="form-control" name="ServicesText">@Model.ServicesText</textarea>
+                    توضیحات تکمیلی
+                </div>
+                <div class="col-12 mb-20">
+                    <label class="adomx-checkbox">
+                        @if (Model.isActive)
+                        {
+                            <input type="checkbox" id="isActive" name="isActive" value="True" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="isActive" value="False" name="isActive">
+                        }
+                        <i class="icon"></i>منتشر شود
+                    </label>
+                </div>
+                <div class="col-6">
+                    @if (!Model.ImageName.IsEmpty())
+                    {
+
+                    <input type="hidden" value="@Model.ImageName" name="ImageName" />
+                    <img src="@Url.Content("~/UploadedFiles/" + Model.ImageName)" />
+                    }
+                </div>
+                <div class="col-12">
+                    <input type="file" name="ImgUp" id="ImgUp" />
+                </div>
+            </div>
+            <button class="button button-outline button-success btn-edit" type="submit">ویرایش سرویس</button>
+        }
+    </div>
+
+</div>
+@section PageScript
+{
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/jquery.nice-select.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/nice-select/niceSelect.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/dropify/dropify.min.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/dropify/dropify.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.active.js"></script>
+    <script src="~/Areas/Admin/Content/assets/js/plugins/toastr/toastr.min.js"></script>
+    <script>
+        function deleteitem(e) {
+            if (confirm("ایا سرویس پاک شود؟")) {
+                e.href = "/Admin/Service/DeleteService";
+            }
+
+        }
+    </script>
+    <script>
+        var input = document.querySelector('#ServiceTitle')
+        var element = document.querySelector("#required");
+        var ch = document.querySelector('#isActive');
+        ch.addEventListener("change", function () {
+            if (this.value == "True") {
+                this.value = "False";
+            }
+            else {
+                this.value = "True";
+            }
+        })
+        input.addEventListener("keyup", function () {
+            element.style.display = "none";
+        })
+        $(function () {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            $('form').ajaxForm({
+                beforeSend: function () {
+                },
+                uploadProgress: function () {
+
+                },
+                success: function (e) {
+
+                    if (e.Status) {
+                        toastr["success"]('تغییرات ذخیره شد');
+                        setTimeout(function () {
+                            location.reload()
+                        }, 1000)
+                    }
+                },
+                error: function () {
+                    toastr["error"]('فیلد را پر کنید');
+                    element.style.display = "block";
+                }
+            })
+
+        })();
+    </script>
+}

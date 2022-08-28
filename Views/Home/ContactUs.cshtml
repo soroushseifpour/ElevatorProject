@@ -1,0 +1,148 @@
+﻿@model ElevatorProject.Models.contactus
+@using CaptchaMvc.HtmlHelpers
+@{
+    ViewBag.Title = "تماس یا ما";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main>
+    <!-- Page Title -->
+    <section class="section page-title-section bg-center-center bg-cover" style="background-image: url(/Content/static/img/overlay-2.jpg)">
+        <div class="container">
+            <div class="page-title text-center">
+                <h1>تماس با ما</h1>
+            </div>
+            <ol class="breadcrumb justify-content-center">
+                <li><a href="index.html">صفحه اصلی</a></li>
+                <li class="active">تماس با ما</li>
+            </ol>
+        </div> <!-- container -->
+    </section>
+    <!-- / -->
+    <!-- Contact Form -->
+    <section class="section gray-bg">
+        <div class="container">
+            <div class="row justify-content-center m-60px-b  md-m-40px-b">
+                <div class="col-12 col-md-10 col-lg-7">
+                    <div class="section-title text-center">
+                        <label>با ما در ارتباط باشید</label>
+                        <h2 class="theme-after">با ما در تماس باشید!</h2>
+                        <div class="title-border"><span class="lg"></span><span class="md"></span><span class="sm"></span></div>
+                    </div>
+                </div>
+            </div> <!-- row -->
+
+            <div class="row justify-content-center javadright">
+                <div class="col-md-10 col-lg-8">
+                    @if (ViewBag.message == null)
+                    {
+
+                        <div class="contact-form md-m-30px-b">
+                            <h2>انتقادات و پیشنهادات خودتون رو با ما در میان بگذارید</h2>
+                            @using (Html.BeginForm("ContactUs", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.fullname, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.fullname, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.fullname, "", new { @class = "text-danger" })
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label " })
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label " })
+                                            @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label  " })
+                                            @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.message, htmlAttributes: new { @class = "control-label  " })
+                                            @Html.TextAreaFor(model => model.message, new { @class = "form-control", @cols = "20", @rows = "6" })
+                                            @Html.ValidationMessageFor(model => model.message, "", new { @class = "text-danger" })
+
+                                            <span class="input-focus-effect"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.Captcha("تازه سازی", "کد را وارد کنید", 4, "Is required field", true)
+                                        </div>
+                                        <div class="text-danger">
+                                            <p style="@ViewBag.LoginErrorStyle">@ViewBag.LoginErrorMessage</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="send">
+                                            <button type="submit" class="m-btn m-btn-theme"><i class="fa fa-envelope-o" aria-hidden="true"></i>ارسال</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-success">@ViewBag.message</p>
+                    }
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-box m-20px-b">
+                        <i class="icon fas fa-map-marker-alt theme-color"></i>
+                        <div class="feature-content">
+                            <h3>دفاتر ما</h3>
+                            <p>تهران،کوی نصر(گیشا)،نبش خیابان 39،ساختمان 270 گیشا</p>
+                        </div>
+                    </div> <!-- feature-box-02 -->
+                    <div class="feature-box box02 m-20px-b">
+                        <i class="icon  far fa-envelope theme-color"></i>
+                        <div class="feature-content">
+                            <h3>ایمیل های ما</h3>
+                            <p>novinrunsanat@gmail.com</p>
+                        </div>
+                    </div> <!-- feature-box-02 -->
+                    <div class="feature-box m-20px-b">
+                        <i class="icon  fas fa-mobile-alt theme-color"></i>
+                        <div class="feature-content">
+                            <h3>تلفن های تماس</h3>
+                            <p>دفتر مرکزی:<br /> 88289424<br />88286429-30 <br> فکس: 88243407<br> کدپستی: 1447994851</p>
+                        </div>
+                    </div> <!-- feature-box-02 -->
+                </div>
+            </div>
+        </div> <!-- container -->
+    </section>
+
+    <!-- / -->
+</main>
+<!-- Main End -->
+@section Scripts
+{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+}

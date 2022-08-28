@@ -1,0 +1,68 @@
+﻿@model PagedList.PagedList<ElevatorProject.Models.BlogTB>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "کاتالوگ ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/rtl.css" />
+<link rel="stylesheet" href="~/Content/MyClass.css" />
+
+<main>
+
+    <!-- Page Title -->
+    <section class="section page-title-section bg-center-center bg-cover" style="background-image: url(/Content/static/img/overlay-2.jpg);">
+        <div class="container">
+            <div class="page-title text-center">
+                <h1>کاتالوگ‌های ما</h1>
+            </div>
+            <ol class="breadcrumb justify-content-center">
+                <li><a href="index.html">صفحه اصلی</a></li>
+                <li class="active">کاتالوگ‌های ما</li>
+            </ol>
+        </div>
+    </section>
+    <!-- / -->
+    <!-- Our Team -->
+    <section id="team" class="section gray-bg">
+        <div class="container">
+            <div class="row justify-content-center m-25px-b md-m-20px-b">
+                <div class="col-md-10 col-lg-5">
+                    <div class="section-title">
+                        <h2 class="theme-after">با کاتالوگ‌های ما آشنا شوید</h2>
+                    </div>
+                </div>
+            </div> <!-- row -->
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 md-m-25px-b">
+                        <div class="services-item">
+                            <div class="img">
+                                <img src="@Url.Content("~/UploadedFiles/" + item.ImageName)" title="@item.ImageName" alt="@item.ImageName">
+                            </div>
+                            <div class="services-content">
+                                <h4><a href="#">@item.BlogTitle</a></h4>
+                                <a href="@Url.Action("BlogDetail","Home",new { id= item.BlogID})" class="m-btn">اطلاعات بیشتر</a>
+                            </div>
+                        </div>
+                    </div> <!-- col -->
+
+                }
+            </div> <!-- row -->
+        </div> <!-- container -->
+        <br>
+        <nav aria-label="Page navigation example" class="main" style="display: flex;flex-direction: column;align-items: center;">
+            <ul class="justify-content-center">
+                @Html.PagedListPager(Model, page => Url.Action("Projects",
+                new { page }), new PagedListRenderOptions
+                {
+                    LiElementClasses = new string[] { "page-item", "myclass", "page-link" },
+                    DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+                    MaximumPageNumbersToDisplay = 6
+                })
+            </ul>
+        </nav>
+    </section>
+    <!-- / -->
+</main>
